@@ -13,9 +13,7 @@ class Board
 
     @columns.times do
       column = []
-      @rows.times do |row|
-        column << nil
-      end
+      @rows.times { |row| column << nil }
       @board << column
     end
   end
@@ -25,6 +23,7 @@ class Board
     error_message = "Column #{column} is full - try another column"
     return error_message if row == rows
 
+    # row is the number of pieces currently on the board, as well as the next "open" slot, since array is zero-indexed
     board[column][row] = piece
 
     @last_column = column
@@ -87,8 +86,8 @@ class Board
   end
 
   def adjacent_exists?(offset_column, offset_row)
-    offset_column.between?(0, @columns) &&
-    offset_row.between?(0, @rows)
+    offset_column.between?(0, @columns - 1) &&
+    offset_row.between?(0, @rows - 1)
   end
 end
 
